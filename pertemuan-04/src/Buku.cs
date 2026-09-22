@@ -1,4 +1,3 @@
-
 namespace Pertemuan04;
 
 public class Buku
@@ -30,18 +29,14 @@ public class Buku
     public Buku(string isbn, string judul, int stokTotal)
     {
         if (judul == null || judul.Trim() == "" || stokTotal < 0 || isbn == null)
-        {
             throw new ArgumentException();
-        }
 
         _stokTotal = _stokTersedia = stokTotal;
         _judul = judul;
 
         string checkIsbn = isbn.Replace("-", "").Replace(" ", "");
         if (checkIsbn.Length != 13 || !checkIsbn.All(char.IsDigit))
-        {
             throw new ArgumentException();
-        }
 
         int sum = 0;
         for (int i = 0; i < 12; i++)
@@ -50,9 +45,7 @@ public class Buku
             sum += (i % 2 == 0) ? digit : digit * 3;
         }
         if ((10 - (sum % 10)) % 10 != (checkIsbn[12] - '0'))
-        {
             throw new ArgumentException();
-        }
 
         _isbn = checkIsbn;
     }
@@ -60,18 +53,14 @@ public class Buku
     public void Pinjam()
     {
         if (_stokTersedia <= 0)
-        {
             throw new InvalidOperationException();
-        }
         _stokTersedia--;
     }
 
     public void Kembalikan()
     {
         if (_stokTersedia >= _stokTotal)
-        {
             throw new InvalidOperationException();
-        }
         _stokTersedia++;
     }
 
@@ -79,7 +68,7 @@ public class Buku
     {
         get
         {
-            if (StokTotal == 0) { return 0; }
+            if (StokTotal == 0) return 0;
             return (double)StokTersedia / (double)StokTotal * 100.0f;
         }
     }
