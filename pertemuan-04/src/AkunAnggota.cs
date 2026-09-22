@@ -1,8 +1,3 @@
-// File ini berisi TODO -- lihat SOAL.md untuk kontrak lengkap tiap level.
-// Bagian bertanda TODO(Level N) adalah tugas kalian; kode lain sudah
-// disediakan. Jangan mengubah nama/tipe yang sudah ada kecuali TODO
-// memintanya secara eksplisit.
-
 namespace Pertemuan04;
 
 public class AkunAnggota
@@ -14,8 +9,8 @@ public class AkunAnggota
     // TODO(Level 9): Nama hanya boleh diisi saat objek dibuat (ganti set ->
     //   init). Denda TIDAK boleh diubah dari luar kelas sama sekali (setter
     //   private) -- perubahannya hanya lewat TambahDenda()/BayarDenda().
-    public string Nama { get; set; } = "";
-    public int Denda { get; set; }
+    public string Nama { get; init; } = "";
+    public int Denda { get; private set; }
 
     // TODO(Level 10): JumlahPinjamanAktif hanya boleh diubah dari dalam kelas
     //   (setter private), dan pencatatannya lewat method internal (bukan public)
@@ -25,24 +20,22 @@ public class AkunAnggota
 
     public AkunAnggota(string nomorAnggota)
     {
-        // TODO(Level 9): nomorAnggota null/kosong/spasi -> ArgumentException;
-        //   selain itu isi NomorAnggota.
-        throw new NotImplementedException("Level 9 belum diimplementasikan");
+        if (nomorAnggota == null || nomorAnggota.Trim() == "")
+            throw new ArgumentException();
+        NomorAnggota = nomorAnggota;
     }
 
     public void TambahDenda(int rupiah)
     {
-        // TODO(Level 9): rupiah <= 0 -> ArgumentOutOfRangeException; selain itu
-        //   tambahkan ke Denda.
-        throw new NotImplementedException("Level 9 belum diimplementasikan");
+        if (rupiah <= 0) throw new ArgumentOutOfRangeException();
+        Denda += rupiah;
     }
 
     public int BayarDenda(int rupiah)
     {
-        // TODO(Level 9): rupiah <= 0 -> ArgumentOutOfRangeException; rupiah >
-        //   Denda -> InvalidOperationException (denda tidak berubah); selain itu
-        //   kurangi Denda dan KEMBALIKAN sisa denda.
-        throw new NotImplementedException("Level 9 belum diimplementasikan");
+        if (rupiah <= 0) throw new ArgumentOutOfRangeException();
+        if (rupiah > Denda) throw new InvalidOperationException();
+        return rupiah - Denda;
     }
 
     public void CatatPinjam()
